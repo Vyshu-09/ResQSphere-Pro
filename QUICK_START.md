@@ -40,11 +40,18 @@ The application uses OpenStreetMap through Leaflet, which is:
 
 The `.env` file should contain:
 ```
+# For local development
 VITE_API_URL=http://localhost:5000/api
 VITE_SOCKET_URL=http://localhost:5000
+
+# Or for production (default if no .env)
+# VITE_API_URL=https://resqsphere-pro-backend.onrender.com/api
+# VITE_SOCKET_URL=https://resqsphere-pro-backend.onrender.com
 ```
 
 **Note**: We're using Vite (instead of Create React App) for much faster development. Environment variables use `VITE_` prefix.
+
+**Production**: If no `.env` file exists, the app uses the production backend URL by default.
 
 ## Step 4: Start Backend Server
 

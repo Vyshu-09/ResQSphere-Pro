@@ -120,7 +120,7 @@ const Maps = ({ adminView = false }) => {
     try {
       const params = adminView ? {} : { status: 'reported', limit: 100 };
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/incidents`,
+        `${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/incidents`,
         { params }
       );
       setIncidents(response.data.data || []);

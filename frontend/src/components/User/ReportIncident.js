@@ -62,7 +62,7 @@ const ReportIncident = () => {
         delete incidentData.address;
 
         const response = await axios.post(
-          `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/incidents`,
+          `${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/incidents`,
           incidentData
         );
 

@@ -26,7 +26,7 @@ const MyReports = () => {
 
   const fetchMyIncidents = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/incidents`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/incidents`);
       const myReports = response.data.data.filter(
         incident => incident.reportedBy?._id?.toString() === user?.id?.toString() || 
         incident.reportedBy?.id?.toString() === user?.id?.toString() ||

@@ -11,12 +11,20 @@ npm install
 
 2. Configure environment variables in `.env`:
 ```
+# For development with local backend
 VITE_API_URL=http://localhost:5000/api
 VITE_SOCKET_URL=http://localhost:5000
+
+# Or use production backend (default if env vars not set)
+# VITE_API_URL=https://resqsphere-pro-backend.onrender.com/api
+# VITE_SOCKET_URL=https://resqsphere-pro-backend.onrender.com
+
 # No API key needed - Uses OpenStreetMap (free)
 ```
 
 **Note**: Vite uses `VITE_` prefix instead of `REACT_APP_` for environment variables.
+
+**Production**: If no `.env` file is present, the app will use the production backend by default.
 
 3. Start the development server:
 ```bash

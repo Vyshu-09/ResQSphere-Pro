@@ -51,7 +51,7 @@ const IncidentManagement = () => {
         ...(typeFilter && { type: typeFilter })
       };
 
-      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/incidents`, { params });
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/incidents`, { params });
       setIncidents(response.data.data);
       setTotal(response.data.pagination.total);
     } catch (error) {
@@ -78,7 +78,7 @@ const IncidentManagement = () => {
 
   const handleSaveStatus = async () => {
     try {
-      await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/incidents/${selectedIncident._id}`, {
+      await axios.put(`${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/incidents/${selectedIncident._id}`, {
         status: newStatus
       });
       setOpenDialog(false);

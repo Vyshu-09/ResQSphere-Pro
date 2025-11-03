@@ -18,7 +18,7 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     if (user) {
-      const newSocket = io(import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000', {
+      const newSocket = io(import.meta.env.VITE_SOCKET_URL || 'https://resqsphere-pro-backend.onrender.com', {
         transports: ['websocket'],
         reconnection: true
       });

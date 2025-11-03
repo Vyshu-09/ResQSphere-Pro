@@ -33,7 +33,7 @@ const AdminAnalytics = () => {
 
   const fetchAnalytics = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/analytics/dashboard`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/analytics/dashboard`);
       setAnalytics(response.data.analytics);
     } catch (error) {
       console.error('Error fetching analytics:', error);

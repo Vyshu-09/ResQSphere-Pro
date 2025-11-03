@@ -130,8 +130,8 @@ const UserDashboard = ({ responder = false }) => {
   const fetchData = async () => {
     try {
       const [incidentsRes, statsRes] = await Promise.all([
-        axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/incidents?page=1&limit=${responder ? 100 : 10}`),
-        axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/incidents/stats`)
+        axios.get(`${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/incidents?page=1&limit=${responder ? 100 : 10}`),
+        axios.get(`${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/incidents/stats`)
       ]);
 
       const allIncidents = incidentsRes.data.data || [];

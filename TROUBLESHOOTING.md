@@ -57,13 +57,19 @@
 **Problem**: Frontend shows connection refused
 
 **Solution**:
-1. Ensure backend is running on port 5000
+1. For local development: ensure backend is running on port 5000
 2. Check `.env` file has correct API URL:
    ```
+   # For local development
    VITE_API_URL=http://localhost:5000/api
    VITE_SOCKET_URL=http://localhost:5000
+   
+   # Or use production backend
+   VITE_API_URL=https://resqsphere-pro-backend.onrender.com/api
+   VITE_SOCKET_URL=https://resqsphere-pro-backend.onrender.com
    ```
-3. Restart frontend after changing `.env`
+3. If no `.env` file, the app uses the production backend by default
+4. Restart frontend after changing `.env`
 
 ## Quick Setup Checklist
 

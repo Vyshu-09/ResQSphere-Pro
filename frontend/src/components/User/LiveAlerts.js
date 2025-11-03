@@ -47,7 +47,7 @@ const LiveAlerts = () => {
     try {
       // Get user location (you can get this from geolocation API)
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/incidents?status=reported&limit=20`
+        `${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/incidents?status=reported&limit=20`
       );
       setIncidents(response.data.data);
     } catch (error) {
