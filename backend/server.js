@@ -9,6 +9,7 @@ require('dotenv').config();
 
 const app = express();
 const server = http.createServer(app);
+app.use(express.json());
 
 // Allowed origins for CORS
 const allowedOrigins = [
