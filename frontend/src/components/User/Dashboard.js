@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { getApiUrl } from '../../config/api';
 import {
   Box,
   Grid,
@@ -130,8 +131,8 @@ const UserDashboard = ({ responder = false }) => {
   const fetchData = async () => {
     try {
       const [incidentsRes, statsRes] = await Promise.all([
-        axios.get(`${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/incidents?page=1&limit=${responder ? 100 : 10}`),
-        axios.get(`${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/incidents/stats`)
+        axios.get(`${getApiUrl()}/incidents?page=1&limit=${responder ? 100 : 10}`),
+        axios.get(`${getApiUrl()}/incidents/stats`)
       ]);
 
       const allIncidents = incidentsRes.data.data || [];

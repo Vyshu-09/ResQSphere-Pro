@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { getApiUrl } from '../../config/api';
 import {
   Box,
   Paper,
@@ -53,7 +54,7 @@ const UserManagement = () => {
         ...(roleFilter && { role: roleFilter })
       };
 
-      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/users`, { params });
+      const response = await axios.get(`${getApiUrl()}/users`, { params });
       setUsers(response.data.data);
       setTotal(response.data.pagination.total);
     } catch (error) {
@@ -80,7 +81,7 @@ const UserManagement = () => {
 
   const handleSaveRole = async () => {
     try {
-      await axios.put(`${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/users/${selectedUser._id}`, {
+      await axios.put(`${getApiUrl()}/users/${selectedUser._id}`, {
         role: newRole
       });
       setOpenDialog(false);
@@ -93,7 +94,7 @@ const UserManagement = () => {
   const handleDeleteUser = async (userId) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       try {
-        await axios.delete(`${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/users/${userId}`);
+        await axios.delete(`${getApiUrl()}/users/${userId}`);
         fetchUsers();
       } catch (error) {
         console.error('Error deleting user:', error);

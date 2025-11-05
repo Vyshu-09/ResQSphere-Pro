@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { getApiUrl } from '../../config/api';
 import {
   Box,
   Paper,
@@ -62,7 +63,7 @@ const ReportIncident = () => {
         delete incidentData.address;
 
         const response = await axios.post(
-          `${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/incidents`,
+          `${getApiUrl()}/incidents`,
           incidentData
         );
 

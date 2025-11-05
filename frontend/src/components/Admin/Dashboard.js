@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { getApiUrl } from '../../config/api';
 import {
   Box,
   Grid,
@@ -84,10 +85,10 @@ const AdminDashboard = () => {
   const fetchStats = async () => {
     try {
       const [usersRes, incidentsRes, analyticsRes, incidentsListRes] = await Promise.all([
-        axios.get(`${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/users/stats`),
-        axios.get(`${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/incidents/stats`),
-        axios.get(`${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/analytics/dashboard`),
-        axios.get(`${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/incidents?page=1&limit=100`)
+        axios.get(`${getApiUrl()}/users/stats`),
+        axios.get(`${getApiUrl()}/incidents/stats`),
+        axios.get(`${getApiUrl()}/analytics/dashboard`),
+        axios.get(`${getApiUrl()}/incidents?page=1&limit=100`)
       ]);
 
       const allIncidents = incidentsListRes.data.data || [];

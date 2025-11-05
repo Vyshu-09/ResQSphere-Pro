@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
+import { getApiUrl } from '../../config/api';
 import {
   Box,
   Paper,
@@ -120,7 +121,7 @@ const Maps = ({ adminView = false }) => {
     try {
       const params = adminView ? {} : { status: 'reported', limit: 100 };
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/incidents`,
+        `${getApiUrl()}/incidents`,
         { params }
       );
       setIncidents(response.data.data || []);

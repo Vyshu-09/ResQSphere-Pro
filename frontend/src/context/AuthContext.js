@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
+import { getApiUrl } from '../config/api';
 
 const AuthContext = createContext();
 
@@ -27,7 +28,7 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUser = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/auth/me`);
+      const response = await axios.get(`${getApiUrl()}/auth/me`);
       const userData = response.data.user;
       setUser(userData);
       localStorage.setItem('user', JSON.stringify(userData));
@@ -52,7 +53,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/auth/login`, {
+      const response = await axios.post(`${getApiUrl()}/auth/login`, {
         email,
         password
       });
@@ -79,7 +80,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/auth/register`, userData);
+      const response = await axios.post(`${getApiUrl()}/auth/register`, userData);
 
       const { token: newToken, user: userDataResponse, refreshToken } = response.data;
       
@@ -117,7 +118,7 @@ export const AuthProvider = ({ children }) => {
         throw new Error('No refresh token');
       }
 
-      const response = await axios.post(`${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/auth/refresh`, {
+      const response = await axios.post(`${getApiUrl()}/auth/refresh`, {
         refreshToken
       });
 
@@ -136,7 +137,7 @@ export const AuthProvider = ({ children }) => {
   const updateUser = async (userId, userData) => {
     try {
       const response = await axios.put(
-        `${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/users/${userId}`,
+        `${getApiUrl()}/users/${userId}`,
         userData
       );
       

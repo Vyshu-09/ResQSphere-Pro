@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { getApiUrl } from '../../config/api';
 import {
   Box,
   Grid,
@@ -33,7 +34,7 @@ const AdminAnalytics = () => {
 
   const fetchAnalytics = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'https://resqsphere-pro-backend.onrender.com/api'}/analytics/dashboard`);
+      const response = await axios.get(`${getApiUrl()}/analytics/dashboard`);
       setAnalytics(response.data.analytics);
     } catch (error) {
       console.error('Error fetching analytics:', error);
