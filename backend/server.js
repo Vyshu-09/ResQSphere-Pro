@@ -9,61 +9,78 @@ require('dotenv').config();
 
 const app = express();
 const server = http.createServer(app);
+
+// Allowed origins for CORS
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://resqsphere-pro-frontend.onrender.com"
+];
+
+// Socket.IO setup with CORS
 const io = socketIo(server, {
   cors: {
-    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    origin: allowedOrigins,
     methods: ["GET", "POST"]
   }
 });
 
 // Middleware
 app.use(helmet());
+
+// Express CORS with origin validation
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "http://localhost:3000",
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true
 }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Rate limiting - More lenient for live updates
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
-  max: 200, // limit each IP to 200 requests per minute (more lenient for live updates)
+  max: 200,
   message: 'Too many requests from this IP, please try again later.',
   standardHeaders: true,
   legacyHeaders: false,
 });
 
-// Apply rate limiting to auth routes only (stricter)
+// Apply rate limiting to auth routes only
 const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 10 // limit each IP to 10 auth requests per 15 minutes
+  windowMs: 15 * 60 * 1000,
+  max: 10
 });
 
-// Apply more lenient rate limiting to API routes
+// Apply rate limiting
 app.use('/api/auth', authLimiter);
 app.use('/api/', limiter);
 
-// MongoDB Connection with better error handling
+// MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI)
-.then(() => {
-  console.log('✅ MongoDB Connected');
-  
-  // Initialize Live Updates Service only after successful connection
-  const LiveUpdatesService = require('./services/liveUpdates');
-  const liveUpdates = new LiveUpdatesService(io);
-  liveUpdates.start();
-})
-.catch(err => {
-  console.error('❌ MongoDB Connection Error:', err);
-  console.error('\n🔍 Troubleshooting Tips:');
-  console.error('1. Check if your MongoDB Atlas cluster is running');
-  console.error('2. Verify your IP is whitelisted in MongoDB Atlas');
-  console.error('3. Check if your MongoDB credentials are correct');
-  console.error('4. Ensure your internet connection is working');
-});
+  .then(() => {
+    console.log('✅ MongoDB Connected');
 
-// Socket.io connection handling
+    // Initialize Live Updates Service only after successful connection
+    const LiveUpdatesService = require('./services/liveUpdates');
+    const liveUpdates = new LiveUpdatesService(io);
+    liveUpdates.start();
+  })
+  .catch(err => {
+    console.error('❌ MongoDB Connection Error:', err);
+    console.error('\n🔍 Troubleshooting Tips:');
+    console.error('1. Check if your MongoDB Atlas cluster is running');
+    console.error('2. Verify your IP is whitelisted in MongoDB Atlas');
+    console.error('3. Check if your MongoDB credentials are correct');
+    console.error('4. Ensure your internet connection is working');
+  });
+
+// Socket.IO connection handling
 io.on('connection', (socket) => {
   console.log('✅ Client connected:', socket.id);
 
@@ -91,13 +108,13 @@ app.use('/api/users', require('./routes/users'));
 app.use('/api/incidents', require('./routes/incidents'));
 app.use('/api/analytics', require('./routes/analytics'));
 
-// Health check
+// Health check route
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'ResQSphere API is running' });
 });
 
+// Start server
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
-
