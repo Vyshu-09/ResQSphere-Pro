@@ -19,7 +19,7 @@ const generateRefreshToken = (id) => {
   });
 };
 
-// @route   POST /api/auth/register
+// @route   POST /auth/register
 // @desc    Register new user
 // @access  Public
 router.post('/register', async (req, res) => {
@@ -61,7 +61,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// @route   POST /api/auth/login
+// @route   POST /auth/login
 // @desc    Login user
 // @access  Public
 router.post('/login', async (req, res) => {
@@ -108,7 +108,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// @route   POST /api/auth/refresh
+// @route   POST /auth/refresh
 // @desc    Refresh access token
 // @access  Public
 router.post('/refresh', async (req, res) => {
@@ -139,7 +139,7 @@ router.post('/refresh', async (req, res) => {
   }
 });
 
-// @route   GET /api/auth/me
+// @route   GET /auth/me
 // @desc    Get current user
 // @access  Private
 router.get('/me', protect, async (req, res) => {
@@ -155,4 +155,3 @@ router.get('/me', protect, async (req, res) => {
 });
 
 module.exports = router;
-
